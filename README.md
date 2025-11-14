@@ -8,7 +8,10 @@ Lucas Vinicius Oliveira da Silva | @Lucas-Viniicius
 Hugo Vinicius de Lima Mendonça | @BRKHugz
 Luiz Fernando Ramos Toledo | @fernandoToledo69
 Davi Lucas da Silva Pinheiro | @davi081dev
-Dados da Disciplina e Instituição
+
+---
+
+- Dados da Disciplina e Instituição
 Disciplina: Programação Imperativa e Funcional - 2025.2 Instituição de Ensino: CESAR School
 
 ---
