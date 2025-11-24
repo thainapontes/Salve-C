@@ -47,9 +47,11 @@ void imprimirMenu()
     screenGotoxy(13, 18);
     printf("                2- Como jogar\n");
     screenGotoxy(13, 20);
-    printf("                3- Creditos\n");
+    printf("                3- Ranking");
+    screenGotoxy(13, 20);
+    printf("                4- Creditos\n");
     screenGotoxy(13, 22);
-    printf("                4- Sair\n\n");
+    printf("                5- Sair\n\n");
 }
 
 void tutorial()
@@ -154,8 +156,8 @@ int telaInicial() // Função para iniciar o menu
     {
         imprimirMenu(); // Imprime as opções do menu inicial
         int opcao;
-        scanf("%d", &opcao); // lê um valor para o switch
-        switch (opcao)       // Switch das opções
+        opcao = getchar();
+        switch (opcao) // Switch das opções
         {
         case '1':
             iniciarGame(); // Inicia o jogo
@@ -164,9 +166,12 @@ int telaInicial() // Função para iniciar o menu
             tutorial(); // Vai a tela de tutorial
             break;
         case '3':
-            creditos(); // Mostra os creditos do jogo
+            mostrarRanking(); // Mostra os melhores jogadores
             break;
         case '4':
+            creditos(); // Mostra os creditos do jogo
+            break;
+        case '5':
             sair(); // Sai do jogo
             break;
         }
