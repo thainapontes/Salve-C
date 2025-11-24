@@ -27,8 +27,10 @@ typedef struct
 
 typedef struct
 {
+    int x;
     int y;
     int tipo;
+    int ativo;
 } Bloco; // Struct do bloco de resposta
 
 Bloco bloco[MAX_BLOCO];
@@ -118,19 +120,28 @@ void verificaColisao(Proposicao *proposicao)
     Jogador *jogador = getJogador();
     for (int i = 0; i < MAX_BLOCO; i++)
     {
-        if (y == bloco[i].y)
+        if (bloco[i].ativo)
         {
-            int colisao = (proposicao->resposta == 'V') ? 0 : 1;
-            if (bloco[i].tipo == colisao)
+            if (bloco[i].x == x && bloco[i].y == y)
             {
-                setPontos(jogador->pontos += 100);
-                gerarProposicao(proposicao);
-            }
-            else
-            {
-                setVidas(jogador->vidas -= 1);
-                setPontos(jogador->pontos -= 50);
-                gerarProposicao(proposicao);
+                int respostaProp = (proposicao->resposta == 'V') ? 0 : 1;
+                if (bloco[i].tipo == respostaProp)
+                {
+                    setPontos(jogador->pontos += 100);
+                    gerarProposicao(proposicao);
+                }
+                else
+                {
+                    setVidas(jogador->vidas -= 1);
+                    setPontos(jogador->pontos -= 50);
+                    gerarProposicao(proposicao);
+                }
+                bloco[i].ativo = 0;
+                screenGotoxy(bloco[i].x, bloco[i].y);
+                printf("   ");
+
+                screenUpdate();
+                break;
             }
         }
     }
@@ -139,9 +150,9 @@ void verificaColisao(Proposicao *proposicao)
 void movimentacao(int ch)
 {
     screenGotoxy(x, y); // apaga a posição anterior do jogador
-    printf("     ");    // tamanho do jogador
+    printf("   ");      // tamanho do jogador
 
-    if (ch == 100 && x < MAXX - strlen("[___]") - 1) // Tecla A
+    if (ch == 100 && x < MAXX - strlen("[_]") - 1) // Tecla A
     {
         x += incX; // move para a esquerda
     }
@@ -152,9 +163,24 @@ void movimentacao(int ch)
 
     // Cria o jogador na nova posição
     screenGotoxy(x, y);
-    printf("[___]");
+    printf("[_]");
 
     screenUpdate();
+}
+
+void criarBloco()
+{
+    for (int i = 0; i < MAX_BLOCO; i++)
+    {
+        if (!bloco[i].ativo)
+        {
+            bloco[i].ativo = 1;
+            bloco[i].x = rand() % (MAXX - 10) + 5;
+            bloco[i].y = 6;
+            bloco[i].tipo = rand() % 2;
+            break;
+        }
+    }
 }
 
 int deslocamentoBloco = 0;
@@ -167,16 +193,28 @@ void atualizaBloco()
     }
     for (int i = 0; i < MAX_BLOCO; i++)
     {
-        if (bloco[i].y)
+        if (bloco[i].ativo)
         {
-            screenGotoxy(2, (bloco[i].y) - 1);
-            printf("                    ");
-            screenGotoxy(2, bloco[i].y);
-            printf("                    ");
-            screenGotoxy(2, (bloco[i].y) + 1);
-            printf("                    ");
-
+            screenGotoxy(bloco[i].x, bloco[i].y);
+            printf("   ");
             bloco[i].y++;
+
+            if (bloco[i].y >= MAXY - 1)
+            {
+                bloco[i].ativo = 0;
+            }
+            else
+            {
+                screenGotoxy(bloco[i].x, bloco[i].y);
+                if (bloco[i].tipo == 0)
+                {
+                    printf("V");
+                }
+                else
+                {
+                    printf("F");
+                }
+            }
         }
     }
 }
@@ -192,6 +230,11 @@ void iniciarGame()
 
     static int caracter = 0;
     static long timer = 0;
+
+    for (int i = 0; i < MAX_BLOCO; i++)
+    {
+        bloco[i].ativo = 0;
+    }
 
     x = 48;
     y = 33;
@@ -213,6 +256,11 @@ void iniciarGame()
         {
             int ch = readch();
             movimentacao(ch);
+        }
+
+        if (rand() % 10 == 0)
+        {
+            criarBloco();
         }
 
         atualizaBloco();              // atualiza a posição dos blocos

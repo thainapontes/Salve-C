@@ -13,9 +13,9 @@ void iniciarJogador(const char *apelido);
 
 Jogador *getJogador();
 
-void setVidas();
+void setVidas(int vidas);
 
-void setPontos();
+void setPontos(int pontos);
 
 void setApelido(const char *apelido);
 
