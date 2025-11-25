@@ -99,21 +99,15 @@ void logica(Proposicao expressao)
 {
     Jogador *statusJogador = getJogador();
 
-    screenGotoxy(3, 3);
+    screenGotoxy(3, 2);
 
-    printf("ESPRESSÃO: %s     RESPOSTA: %c", expressao.proposicao, expressao.resposta);
+    printf("Espressão: %s     Resposta: %c  ", expressao.proposicao, expressao.resposta);
 
-    screenGotoxy(2, 5);
-    printf("_____________________________________________________________________________");
-    screenGotoxy(MAXX * 0.5, 2);
-    printf("|");
-    screenGotoxy(MAXX * 0.5, 3);
-    printf("|");
-    screenGotoxy(MAXX * 0.5, 4);
-    printf("|");
+    screenGotoxy(2, 3);
+    printf("-------------------------------------------------------------------------------------------------");
 
-    screenGotoxy((MAXX * 0.5) + 8, 3);
-    printf("VIDAS: %d          PONTOS: %d", statusJogador->vidas, statusJogador->pontos);
+    screenGotoxy((MAXX * 0.5) + 8, 2);
+    printf("Vidas: %d          Pontos: %d", statusJogador->vidas, statusJogador->pontos);
 }
 
 void verificaColisao(Proposicao *proposicao)
@@ -123,7 +117,7 @@ void verificaColisao(Proposicao *proposicao)
     {
         if (bloco[i].ativo)
         {
-            if (bloco[i].x == x && bloco[i].y == y)
+            if (bloco[i].x == x + 1 && bloco[i].y == y)
             {
                 int respostaProp = (proposicao->resposta == 'V') ? 0 : 1;
                 if (bloco[i].tipo == respostaProp)
@@ -140,6 +134,8 @@ void verificaColisao(Proposicao *proposicao)
                 bloco[i].ativo = 0;
                 screenGotoxy(bloco[i].x, bloco[i].y);
                 printf("   ");
+                screenGotoxy(x, y);
+                printf("[_]");
 
                 screenUpdate();
                 break;
@@ -177,47 +173,53 @@ void criarBloco()
         {
             bloco[i].ativo = 1;
             bloco[i].x = rand() % (MAXX - 10) + 5;
-            bloco[i].y = 6;
+            bloco[i].y = 4;
             bloco[i].tipo = rand() % 2;
             break;
         }
     }
 }
 
-int deslocamentoBloco = 0;
+int asteroidTick = 0;
+int tick = 0;
 void atualizaBloco()
 {
-    deslocamentoBloco++;
-    if (deslocamentoBloco % 3 != 0)
-    {
-        return; // o bloco so se move a cada duas atualizações
-    }
-    for (int i = 0; i < MAX_BLOCO; i++)
-    {
-        if (bloco[i].ativo)
-        {
-            screenGotoxy(bloco[i].x, bloco[i].y);
-            printf("   ");
-            bloco[i].y++;
+    asteroidTick++;
+    if (asteroidTick % 3 != 0)
+        return; // só move a cada 3 atualizações (ajuste esse valor)
 
-            if (bloco[i].y >= MAXY - 1)
+    if (tick == 1000)
+    {
+        for (int i = 0; i < MAX_BLOCO; i++)
+        {
+            if (bloco[i].ativo)
             {
-                bloco[i].ativo = 0;
-            }
-            else
-            {
+                // Apaga a posição anterior dele
                 screenGotoxy(bloco[i].x, bloco[i].y);
-                if (bloco[i].tipo == 0)
+                printf("   ");
+
+                // Atualiza o Y para ele descer
+                bloco[i].y++;
+
+                // Desativa ele caso toque na borda de baixo
+                if (bloco[i].y >= MAXY - 1)
                 {
-                    printf("[V]");
+                    bloco[i].ativo = 0;
                 }
-                else
+                else // Se não tocar na borda
                 {
-                    printf("[F]");
+                    // Cria ele na nova posição de acordo com o tipo
+                    screenGotoxy(bloco[i].x, bloco[i].y);
+                    if (bloco[i].tipo == 0)
+                        printf("V");
+                    else
+                        printf("F");
                 }
             }
+            tick = 0;
         }
     }
+    tick++;
 }
 
 void iniciarGame()
@@ -236,7 +238,7 @@ void iniciarGame()
         bloco[i].ativo = 0;
     }
 
-    x = 32;
+    x = MAXX * 0.5 - 1;
     y = 33;
 
     srand(time(NULL));
@@ -269,8 +271,8 @@ void iniciarGame()
         screenUpdate();
         timer++;
     }
-    // salvarPontuacao(); // Salva a pontuação em um arquivo externo
-    telaDerrota(); // Mostra a tela de game over
+    salvarPontuacao(); // Salva a pontuação em um arquivo externo
+    telaDerrota();     // Mostra a tela de game over
 }
 
 int main()

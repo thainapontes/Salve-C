@@ -31,30 +31,30 @@ void imprimirMenu()
 {
     screenClear();
     screenDrawBorders();
-    screenGotoxy(13, 3);
-    printf("   _____         _ __      ________       _____ \n");
-    screenGotoxy(13, 4);
-    printf("  / ____|  /\\   | |\\ \\    / /  ____|     / ____|\n");
-    screenGotoxy(13, 5);
-    printf(" | (___   /  \\  | | \\ \\  / /| |__ ______| |     \n");
     screenGotoxy(13, 6);
-    printf("  \\___ \\ / /\\ \\ | |  \\ \\/ / |  __|______| |     \n");
+    printf("                _____         _ __      ________       _____ \n");
     screenGotoxy(13, 7);
-    printf("  ____) / ____ \\| |___\\  /  | |____     | |____ \n");
+    printf("               / ____|  /\\   | |\\ \\    / /  ____|     / ____|\n");
     screenGotoxy(13, 8);
-    printf(" |_____/_/    \\_\\______\\/   |______|     \\_____|\n\n");
+    printf("              | (___   /  \\  | | \\ \\  / /| |__ ______| |     \n");
     screenGotoxy(13, 9);
-    printf("                  QUEM PUDER!\n");
-    screenGotoxy(13, 13);
-    printf("                1- Jogar\n");
-    screenGotoxy(13, 15);
-    printf("                2- Como jogar\n");
-    screenGotoxy(13, 17);
-    printf("                3- Ranking");
-    screenGotoxy(13, 19);
-    printf("                4- Creditos\n");
-    screenGotoxy(13, 21);
-    printf("                5- Sair\n\n");
+    printf("               \\___ \\ / /\\ \\ | |  \\ \\/ / |  __|______| |     \n");
+    screenGotoxy(13, 10);
+    printf("               ____) / ____ \\| |___\\  /  | |____     | |____ \n");
+    screenGotoxy(13, 11);
+    printf("              |_____/_/    \\_\\______\\/   |______|     \\_____|\n\n");
+    screenGotoxy(13, 12);
+    printf("                               QUEM PUDER!\n");
+    screenGotoxy(13, 18);
+    printf("                             1- Jogar\n");
+    screenGotoxy(13, 20);
+    printf("                             2- Como jogar\n");
+    screenGotoxy(13, 22);
+    printf("                             3- Ranking");
+    screenGotoxy(13, 24);
+    printf("                             4- Creditos\n");
+    screenGotoxy(13, 26);
+    printf("                             5- Sair\n\n");
 }
 
 void tutorial()
@@ -73,13 +73,13 @@ void tutorial()
     screenGotoxy(13, 13);
     printf("           Expressão: V → V          ");
 
-    screenGotoxy(13, 15);
+    screenGotoxy(13, 16);
     printf("Colete a respota correta");
 
-    screenGotoxy(13, 17);
+    screenGotoxy(13, 18);
     printf("    [V]          [F]");
 
-    screenGotoxy(13, 22);
+    screenGotoxy(MAXX / 2 - 18, 34);
     printf("Pressione qualquer tecla para voltar");
     getchar();
 }
@@ -90,8 +90,23 @@ void creditos()
     screenDrawBorders();
     screenUpdate();
 
-    screenGotoxy(13, 5);
-    printf("Criado por");
+    screenGotoxy(13, 4);
+    printf("Criado por:");
+
+    screenGotoxy(13, 8);
+    printf("Davi Lucas da Silva Pinheiro");
+    screenGotoxy(13, 10);
+    printf("Hugo Vinícius de Lima Mendonça");
+    screenGotoxy(13, 12);
+    printf("Lucas Vinicius O. da Silva");
+    screenGotoxy(13, 14);
+    printf("Luiz Fernando Ramos de Toledo");
+    screenGotoxy(13, 16);
+    printf("Michel dos Santos Serpa");
+    screenGotoxy(13, 18);
+    printf("Thainá Pontes da Silva");
+    screenGotoxy(MAXX / 2 - 18, 34);
+    printf("Pressione qualquer tecla para voltar");
     getchar();
 }
 
@@ -100,7 +115,7 @@ void sair()
     screenClear();
     screenDrawBorders();
 
-    screenGotoxy(65, 22);
+    screenGotoxy(85, 34);
     printf("Saindo...");
 
     screenUpdate();
@@ -117,10 +132,12 @@ void telaDerrota()
 
     while (1)
     {
-        screenGotoxy(MAXX / 2, MAXY / 2);
+        Jogador *jogador = getJogador();
+        int pontos = jogador->pontos;
+        screenGotoxy(MAXX / 2 - 25, MAXY / 2);
         printf("VOCÊ REPROVOU! TENTE NOVAMENTE PROXIMO PERIODO!");
-        screenGotoxy(34, 20);
-        printf("Sua pontuação foi: "); // Mostra a pontuação do jogador
+        screenGotoxy(MAXX / 2 - 14, MAXY / 2 + 2);
+        printf("Sua pontuação foi: %d", pontos); // Mostra a pontuação do jogador
 
         // Printa botão de jogar novamente
         screenGotoxy(MAXX / 2 - 13, 32);

@@ -15,7 +15,7 @@ void salvarPontuacao()
 {
     Jogador *jogador = getJogador();
     int pontos = jogador->pontos;
-    FILE *arquivo = fopen("Salve-C/ranking/rank.txt", "a");
+    FILE *arquivo = fopen("ranking/rank.txt", "a");
     fprintf(arquivo, "%s %d\n", jogador->apelido, pontos);
     fclose(arquivo);
 }
@@ -48,7 +48,7 @@ void mostrarRanking()
     }
     fclose(arquivo);
     qsort(ranks, r, sizeof(Ranking), compararRank);
-    screenGotoxy(12, 5);
+    screenGotoxy(12, 4);
     printf("Melhores jogadores: ");
 
     int top = r < 10 ? r : 10;
@@ -57,7 +57,7 @@ void mostrarRanking()
         screenGotoxy((MAXX / 2) - 10, 7 + i);
         printf("%2d. %s - %d", i + 1, ranks[i].nome, ranks[i].pontuacao);
     }
-    screenGotoxy(12, 7);
+    screenGotoxy(MAXX / 2 - 18, 34);
     printf("Pessione qualquer tecla para voltar.");
     getchar();
 }
