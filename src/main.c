@@ -13,6 +13,7 @@
 #include "timer.h"
 #include "telas.h"
 #include "jogador.h"
+#include "pontuacao.h"
 
 #define MAX_BLOCO 10
 
@@ -56,8 +57,8 @@ void gerarProposicao(Proposicao *prop)
 
     // Se negaP1/P2 == 1 ele inverte o valor (Nega)
     // Se negaP1/P2 == 0 o valor é mantido (Não nega)
-    char valA = negaP1 ? negar(p1) : p1;
-    char valB = negaP2 ? negar(p2) : p2;
+    char valA = negaP1 ? negacao(p1) : p1;
+    char valB = negaP2 ? negacao(p2) : p2;
 
     // Define qual vai ser o operador lógico
     int opIndex = rand() % 4;
@@ -100,10 +101,10 @@ void logica(Proposicao expressao)
 
     screenGotoxy(3, 3);
 
-    printf("ESPRESSÃO: %s     RESPOSTA: %s", expressao.proposicao, expressao.resposta);
+    printf("ESPRESSÃO: %s     RESPOSTA: %d", expressao.proposicao, expressao.resposta);
 
     screenGotoxy(2, 5);
-    printf("_________________________________________________________________________________________________");
+    printf("_____________________________________________________________________________");
     screenGotoxy(MAXX * 0.5, 2);
     printf("|");
     screenGotoxy(MAXX * 0.5, 3);
@@ -187,7 +188,7 @@ int deslocamentoBloco = 0;
 void atualizaBloco()
 {
     deslocamentoBloco++;
-    if (deslocamentoBloco % 2 != 0)
+    if (deslocamentoBloco % 3 != 0)
     {
         return; // o bloco so se move a cada duas atualizações
     }
@@ -208,11 +209,11 @@ void atualizaBloco()
                 screenGotoxy(bloco[i].x, bloco[i].y);
                 if (bloco[i].tipo == 0)
                 {
-                    printf("V");
+                    printf("[V]");
                 }
                 else
                 {
-                    printf("F");
+                    printf("[F]");
                 }
             }
         }
@@ -228,7 +229,6 @@ void iniciarGame()
     setVidas(5);
     setPontos(0);
 
-    static int caracter = 0;
     static long timer = 0;
 
     for (int i = 0; i < MAX_BLOCO; i++)
@@ -236,7 +236,7 @@ void iniciarGame()
         bloco[i].ativo = 0;
     }
 
-    x = 48;
+    x = 32;
     y = 33;
 
     srand(time(NULL));
@@ -269,8 +269,8 @@ void iniciarGame()
         screenUpdate();
         timer++;
     }
-    salvarPontuacao(); // Salva a pontuação em um arquivo externo
-    telaDerrota();     // Mostra a tela de game over
+    // salvarPontuacao(); // Salva a pontuação em um arquivo externo
+    telaDerrota(); // Mostra a tela de game over
 }
 
 int main()

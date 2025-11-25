@@ -33,5 +33,5 @@ void setPontos(int pontos)
 void setApelido(const char *apelido)
 {
     strncpy(jogador.apelido, apelido, TAM_MAX_APELIDO - 1);
-    jogador.apelido[TAM_MAX_APELIDO - 1];
+    jogador.apelido[TAM_MAX_APELIDO - 1] = '\0';
 }

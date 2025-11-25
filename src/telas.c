@@ -4,6 +4,7 @@
 #include "jogador.h"
 #include "main.h"
 #include "telas.h"
+#include "pontuacao.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -28,29 +29,31 @@ void nomeJogador()
 
 void imprimirMenu()
 {
-    screenGotoxy(13, 8);
+    screenClear();
+    screenDrawBorders();
+    screenGotoxy(13, 3);
     printf("   _____         _ __      ________       _____ \n");
-    screenGotoxy(13, 9);
+    screenGotoxy(13, 4);
     printf("  / ____|  /\\   | |\\ \\    / /  ____|     / ____|\n");
-    screenGotoxy(13, 10);
+    screenGotoxy(13, 5);
     printf(" | (___   /  \\  | | \\ \\  / /| |__ ______| |     \n");
-    screenGotoxy(13, 11);
+    screenGotoxy(13, 6);
     printf("  \\___ \\ / /\\ \\ | |  \\ \\/ / |  __|______| |     \n");
-    screenGotoxy(13, 12);
+    screenGotoxy(13, 7);
     printf("  ____) / ____ \\| |___\\  /  | |____     | |____ \n");
-    screenGotoxy(13, 13);
+    screenGotoxy(13, 8);
     printf(" |_____/_/    \\_\\______\\/   |______|     \\_____|\n\n");
-    screenGotoxy(13, 14);
+    screenGotoxy(13, 9);
     printf("                  QUEM PUDER!\n");
-    screenGotoxy(13, 16);
+    screenGotoxy(13, 13);
     printf("                1- Jogar\n");
-    screenGotoxy(13, 18);
+    screenGotoxy(13, 15);
     printf("                2- Como jogar\n");
-    screenGotoxy(13, 20);
+    screenGotoxy(13, 17);
     printf("                3- Ranking");
-    screenGotoxy(13, 20);
+    screenGotoxy(13, 19);
     printf("                4- Creditos\n");
-    screenGotoxy(13, 22);
+    screenGotoxy(13, 21);
     printf("                5- Sair\n\n");
 }
 
@@ -58,39 +61,38 @@ void tutorial()
 {
     screenClear();
     screenDrawBorders();
+    screenUpdate();
 
-    // Movimentar
     screenGotoxy(13, 8);
-    printf("  Use A  D para se mover");
+    printf("Use as telcas A e D para se mover");
+    screenGotoxy(13, 9);
+    printf("         [_]");
 
-    // Proposições
     screenGotoxy(13, 12);
     printf("Você receberá uma proposição aleatória");
     screenGotoxy(13, 13);
-    printf("           Expressão: ¬F → F          ");
+    printf("           Expressão: V → V          ");
 
-    // Interface do jogo
+    screenGotoxy(13, 15);
+    printf("Colete a respota correta");
 
-    // Voltar ao menu
+    screenGotoxy(13, 17);
+    printf("    [V]          [F]");
+
     screenGotoxy(13, 22);
-    printf("Pressione ENTER para voltar");
-    if (keyhit())
-    {
-        int tecla = readch();
-        if (tecla == '\n')
-        {
-            telaInicial();
-        }
-    }
+    printf("Pressione qualquer tecla para voltar");
+    getchar();
 }
 
 void creditos()
 {
     screenClear();
     screenDrawBorders();
+    screenUpdate();
 
     screenGotoxy(13, 5);
     printf("Criado por");
+    getchar();
 }
 
 void sair()
@@ -98,7 +100,7 @@ void sair()
     screenClear();
     screenDrawBorders();
 
-    screenGotoxy((MAXX / 2) - 5, (MAXY / 2));
+    screenGotoxy(65, 22);
     printf("Saindo...");
 
     screenUpdate();
@@ -111,6 +113,7 @@ void telaDerrota()
 {
     screenClear();
     screenDrawBorders();
+    screenUpdate();
 
     while (1)
     {
