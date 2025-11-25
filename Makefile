@@ -29,4 +29,4 @@ clean:
 	rm -rf $(BUILD_DIR)
 
 run: all
-	./$(BUILD_DIR)/Salve-C
+	./$(BUILD_DIR)/$(PROJ_NAME)

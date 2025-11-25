@@ -33,7 +33,7 @@ void mostrarRanking()
     screenDrawBorders();
     screenUpdate();
 
-    FILE *arquivo = fopen("Salve-C/ranking/rank.txt", "r");
+    FILE *arquivo = fopen("ranking/rank.txt", "r");
 
     Ranking ranks[20];
     int r = 0;
