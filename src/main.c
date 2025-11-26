@@ -101,7 +101,7 @@ void logica(Proposicao expressao)
 
     screenGotoxy(3, 2);
 
-    printf("Espressão: %s     Resposta: %c  ", expressao.proposicao, expressao.resposta);
+    printf("Expressão: %s     Resposta: %c  ", expressao.proposicao, expressao.resposta);
 
     screenGotoxy(2, 3);
     printf("-------------------------------------------------------------------------------------------------");
@@ -281,3 +281,4 @@ int main()
     telaInicial();
     return 0;
 }
+
