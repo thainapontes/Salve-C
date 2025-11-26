@@ -3,7 +3,7 @@
 ---
 
 ## 💥 O Teste de Lógica Supremo!
-Corra, desvie e decida!  
+Corra, para um lado e para o outro!  
 Salve seu cérebro da aniquilação lógica neste arcade de raciocínio rápido.
 
 ---
@@ -11,11 +11,11 @@ Salve seu cérebro da aniquilação lógica neste arcade de raciocínio rápido.
 ## 📝 Descrição
 Salve-C é um jogo de sobrevivência em estilo arcade, desenvolvido na linguagem C, onde o tempo e o raciocínio são igualmente essenciais.
 
-O mundo foi invadido por proposições lógicas que caem aleatoriamente do céu, e sua missão é simples:
+O mundo foi invadido por proposições lógicas, mas calma! a solucão cai aleatoriamente do céu, na forma de VERDADEIRO (V) ou FALSO (F) e sua missão é simples:
 
 - Coletar apenas as proposições corretas.
-- Se você coletar uma proposição cujo valor **não é o recomendado**, perde uma vida.
-- Se você coletar uma proposição cujo o valor **é recomendado**, ganha pontos.
+- Se você coletar uma proposição cujo valor **não é o recomendado**, perde uma vida e perde uma quantidade de pontos.
+- Se você coletar uma proposição cujo o valor **é recomendado**, ganha pontos e a proposição é trocada.
 
 Simples? Talvez.  
 Rápido? Com certeza.  
@@ -24,7 +24,7 @@ Caótico? SEM DÚVIDA.
 ---
 
 ## 🎮 Como Jogar
-**Movimentação:** Use as setas do teclado para mover a caixinha para esquerda ou direita.  
+**Movimentação:** Use as setas do teclado para mover a cestinha da alegria para esquerda ou direita.  
 **Objetivo:** Pontuar o máximo possível sem perder suas vidas.
 
 ---
@@ -53,4 +53,5 @@ Caótico? SEM DÚVIDA.
 - Programação Imperativa e Funcional  
 - Lógica para Computação  
 **Professores:** Diego Bezerra e Guilherme Fernando
+
 
