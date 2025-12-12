@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
 #include "screen.h"
 #include "jogador.h"
 #include "pontuacao.h"
@@ -16,6 +17,18 @@ void salvarPontuacao()
     Jogador *jogador = getJogador();
     int pontos = jogador->pontos;
     FILE *arquivo = fopen("ranking/rank.txt", "a");
+    if (!arquivo)
+    {
+        /* tenta criar diretório caso não exista e reabrir o arquivo */
+        mkdir("ranking", 0755);
+        arquivo = fopen("ranking/rank.txt", "a");
+        if (!arquivo)
+        {
+            perror("Erro ao abrir ranking/rank.txt para escrita");
+            return;
+        }
+    }
+
     fprintf(arquivo, "%s %d\n", jogador->apelido, pontos);
     fclose(arquivo);
 }
@@ -32,19 +45,23 @@ void mostrarRanking()
     screenClear();
     screenDrawBorders();
     screenUpdate();
-
     FILE *arquivo = fopen("ranking/rank.txt", "r");
+    if (!arquivo)
+    {
+        screenGotoxy(MAXX / 2 - 18, MAXY / 2);
+        printf("Nenhum ranking encontrado.");
+        screenGotoxy(MAXX / 2 - 18, 34);
+        printf("Pressione qualquer tecla para voltar.");
+        getchar();
+        return;
+    }
 
     Ranking ranks[20];
     int r = 0;
 
-    while (fscanf(arquivo, "%19s %d", ranks[r].nome, &ranks[r].pontuacao) == 2)
+    while (r < 20 && fscanf(arquivo, "%19s %d", ranks[r].nome, &ranks[r].pontuacao) == 2)
     {
         r++;
-        if (r >= 20)
-        {
-            break;
-        }
     }
     fclose(arquivo);
     qsort(ranks, r, sizeof(Ranking), compararRank);

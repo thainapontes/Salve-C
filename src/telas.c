@@ -121,6 +121,9 @@ void sair()
     screenUpdate();
     sleep(1);
     screenClear();
+    /* restaura teclado e tela antes de sair */
+    keyboardDestroy();
+    screenDestroy();
     exit(0);
 }
 
